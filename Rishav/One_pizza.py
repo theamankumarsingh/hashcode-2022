@@ -23,8 +23,6 @@ while i<len_like_ingr:
         if like_ingr[i]==dislike_ingr[t]:
             del dislike_ingr[t]
             del like_ingr[i]
-            t=0
-            i=0
             check=0
             len_dislike_ingr=len(dislike_ingr)
             len_like_ingr=len(like_ingr)
@@ -37,7 +35,7 @@ for x in like_ingr:
     if x not in unique_ingr:
         unique_ingr.append(x)
 output=str(len(unique_ingr))
-for i in range(len(unique_ingr)):
+for i in unique_ingr:
     output=output+" "+unique_ingr[i]
 output_file=open(sys.argv[2],"w")
 output_file.write(output)
