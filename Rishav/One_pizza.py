@@ -1,41 +1,29 @@
 import sys
 file=open(sys.argv[1],"r").read().splitlines()
 client=int(file[0])
-like_ingr=[]
-dislike_ingr=[]
+like_ingr={}
+final=[]
 for i in range(1,client+1):
     like_ingredient=file[2*i-1].split()
     for t in range(len(like_ingredient)):
         if t!=0:
-            like_ingr.append(like_ingredient[t])
+            if like_ingredient[t] in like_ingr.keys():
+                like_ingr[like_ingredient[t]]=like_ingr.get(like_ingredient[t])+1
+            else:
+                like_ingr[like_ingredient[t]]=1
     dislike_ingredient=file[2*i].split()
     for t in range(len(dislike_ingredient)):
         if t!=0:
-            dislike_ingr.append(dislike_ingredient[t])
-len_like_ingr=len(like_ingr)
-len_dislike_ingr=len(dislike_ingr)
-i=0
-t=0
-while i<len_like_ingr:
-    check=1
-    t=0
-    while t<len_dislike_ingr:
-        if like_ingr[i]==dislike_ingr[t]:
-            del dislike_ingr[t]
-            del like_ingr[i]
-            check=0
-            len_dislike_ingr=len(dislike_ingr)
-            len_like_ingr=len(like_ingr)
-        else:
-            t=t+1
-    if check==1:
-        i=i+1
-unique_ingr=[]
-for x in like_ingr:
-    if x not in unique_ingr:
-        unique_ingr.append(x)
-output=str(len(unique_ingr))
-for i in unique_ingr:
-    output=output+" "+unique_ingr[i]
+            if dislike_ingredient[t] in like_ingr.keys():
+                like_ingr[dislike_ingredient[t]]=like_ingr.get(dislike_ingredient[t])-1
+            else:
+                like_ingr[dislike_ingredient[t]]=-1
+print(client//3)
+for k,v in like_ingr.items():
+    if v>=client//client-1:
+        final.append(k)
+output=str(len(final))
+for i in final:
+    output=output+" "+i
 output_file=open(sys.argv[2],"w")
 output_file.write(output)
