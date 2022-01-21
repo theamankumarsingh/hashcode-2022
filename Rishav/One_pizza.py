@@ -18,12 +18,18 @@ for i in range(1,client+1):
                 like_ingr[dislike_ingredient[t]]=like_ingr.get(dislike_ingredient[t])-1
             else:
                 like_ingr[dislike_ingredient[t]]=-1
-print(client//3)
 for k,v in like_ingr.items():
     if v>=client//client-1:
         final.append(k)
 output=str(len(final))
 for i in final:
     output=output+" "+i
-output_file=open(sys.argv[2],"w")
+out_file=sys.argv[1].split(".")
+out_file[1]="out"
+out_filename=""
+for t in out_file:
+    out_filename=out_filename+t
+    if t!="txt":
+        out_filename=out_filename+"."
+output_file=open(out_filename,"w")
 output_file.write(output)
