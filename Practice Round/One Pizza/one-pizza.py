@@ -112,7 +112,8 @@ while loop:
             customers_count = maxval
             print(f"New customer count = {maxval}")
             keys = keywithval(dt,maxval)
-            pizza_ingredients = set(x for x in pizza_ingredients if x not in list(keys))
+            for key in list(keys):
+                pizza_ingredients.remove(key)
             print(f"New Ingredients count = {len(pizza_ingredients)}")
             break
 
@@ -125,3 +126,4 @@ print(f"Final Customer Count = {customers_count}")
 open(sys.argv[2], 'w').write(str(len(pizza_ingredients))+' '+' '.join(map(str, pizza_ingredients)))
 
 print("--- %s seconds ---" % (time.time() - start_time))
+
