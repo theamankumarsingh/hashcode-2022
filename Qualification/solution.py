@@ -30,12 +30,14 @@ projects_name=[]
 
 #
 #{BOB:[skill1{name:level}, skill2, skill3]}
+#[{name: bob,skills:[skill1{name:level}, skill2, skill3]}, ]
+
 
 # Aman's code
 for j in range(CP[0]):
     contributors[input_data[i].split(' ')[0]]=[]
     name=input_data[i].split(' ')[0]
-    contributors_name[name]=[]
+    contributors_name.append(name)
     for k in range(int(input_data[i].split(' ')[1])):
         contributors[name].append(input_data[i+k+1])
     i+=int(input_data[i].split(' ')[1])+1
@@ -64,6 +66,26 @@ projects_name.reverse()
 print(projects_name)
 print(projects[projects_name[0]])
 
+assigned_projects = []
+
 for i in range(len(projects_name)):
+    d = dict()
+    d["name"] = projects_name[i]
+    d["assigned"] = []
     for role in projects[projects_name[i]]['roles']:
-        
+        for contributor in contributors.keys():
+            #skills = contributors[contributor].split(' ')
+            #skills = [x.split(' ')[0] for x in contributors[contributor]]
+            #print(skills)
+            #if role.split(' ')[0] in contributors[contributor]
+            contributor_found = False
+            for skill in contributors[contributor]:
+                if skill.startswith(role.split(' ')[0]) and int(role.split(' ')[1]) <= int(skill.split(' ')[1]):
+                    d["assigned"].append(contributor)
+                    contributor_found = True
+                    #print(contributor, skill, projects_name[i], role)
+            if not contributor_found:
+                 break        
+    assigned_projects.append(d)
+
+print(assigned_projects)
